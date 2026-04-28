@@ -2,9 +2,13 @@ const express = require('express');
 const app = express();
 const connectDb = require('./database/config');
 const authRouter = require('./routes/authRoute');
+const profileRoute = require('./routes/profileRoute');
+const cookieParser = require('cookie-parser');
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(authRouter);
+app.use(profileRoute);
 
 app.listen(3000, () =>
 {

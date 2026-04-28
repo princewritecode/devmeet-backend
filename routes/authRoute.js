@@ -3,6 +3,7 @@ const authRouter = express.Router();
 const userModel = require('../model/userModel');
 const JWT = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
 authRouter.post('/signup', async (req, res) =>
 {
     try
@@ -25,20 +26,17 @@ authRouter.post('/login', async (req, res) =>
     try
     {
         const { emailId, password } = req.body;
-
         const user = await userModel.findOne({ emailId });
         if (!user)
         {
             // Use return to stop execution and send a 401
             return res.status(401).send('Invalid credentials');
         }
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
-
         if (isPasswordValid)
         {
             // Use environment variables for secrets!
-            const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET || "fallback_secret", { expiresIn: '1h' });
+            const token = await JWT.sign({ _id: user._id }, "devmeet@123", { expiresIn: '1h' });
 
             // Set security flags on the cookie
             res.cookie('token', token, {
@@ -57,6 +55,23 @@ authRouter.post('/login', async (req, res) =>
         // Log the actual error for you, but send a generic message to user
         console.error(err);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+authRouter.post('/logout', async (req, res) =>
+{
+    try
+    {
+
+        res.cookie('token', null, {
+            expires: new Date(Date.now()),
+            httpOnly: true,
+        });
+
+        res.send("Logout successful!");
+    } catch (err)
+    {
+        res.status(500).send("Something went wrong during logout");
     }
 });
 
