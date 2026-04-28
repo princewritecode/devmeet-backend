@@ -20,7 +20,6 @@ authRouter.post('/signup', async (req, res) =>
         console.log(err);
     }
 });
-
 authRouter.post('/login', async (req, res) =>
 {
     try
@@ -57,12 +56,10 @@ authRouter.post('/login', async (req, res) =>
         res.status(500).send('Internal Server Error');
     }
 });
-
 authRouter.post('/logout', async (req, res) =>
 {
     try
     {
-
         res.cookie('token', null, {
             expires: new Date(Date.now()),
             httpOnly: true,
@@ -81,13 +78,13 @@ authRouter.delete('/userdelete', async (req, res) =>
     const user = await userModel.findByIdAndDelete({ _id: userIdRecieved });
     res.send('user deleted successfullyu....');
 });
-authRouter.patch('/update', async (req, res) =>
-{
-    const userId = req.body.userIds;
-    const userData = req.body;
-    const user = await userModel.findByIdAndUpdate(userId, userData, { runValidators: true });
-    await user.save();
-    res.send('updated');
-});
+// authRouter.patch('/update', async (req, res) =>
+// {
+//     const userId = req.body.userIds;
+//     const userData = req.body;
+//     const user = await userModel.findByIdAndUpdate(userId, userData, { runValidators: true });
+//     await user.save();
+//     res.send('updated');
+// });
 
 module.exports = authRouter;
