@@ -4,6 +4,7 @@ const userModel = require('../model/userModel');
 const JWT = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+
 authRouter.post('/signup', async (req, res) =>
 {
     try
@@ -44,7 +45,7 @@ authRouter.post('/login', async (req, res) =>
                 // secure: true, // Only use this if you are on HTTPS
             });
 
-            return res.send('Login successful');
+            return res.send(user);
         } else
         {
             return res.status(401).send('Invalid credentials');
