@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const requestRouter = require('./routes/request');
 const cors = require('cors');
 
-app.use(cors({ origin: 'http://localhost:5174', credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'] }));
+app.use(cors({ origin: 'https://devmeet.site', credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'] }));
 
 app.use(cookieParser());
 app.use(express.json());
