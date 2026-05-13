@@ -8,7 +8,13 @@ const cookieParser = require('cookie-parser');
 const requestRouter = require('./routes/request');
 const cors = require('cors');
 
-app.use(cors({ origin: 'https://devmeet.site', credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'] }));
+app.use(cors({
+    // Add your production domain and your local development URL
+    origin: ["https://devmeet.site", "http://localhost:5174"],
+    credentials: true, // Required for cookies/sessions
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.use(cookieParser());
 app.use(express.json());
